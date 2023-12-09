@@ -4,17 +4,17 @@
 # determine grating amplitude and angle
 
 
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
-def generate_phase_pattern(matrix, macropixel_size):
+def generate_phase_pattern(matrix, macropixel_size, grating_frequency):
     """
-    Generate a phase pattern for an LC-SLM based on the given matrix,
-    with values ranging from 0 to 1 and grating scaled from 0 to π.
+    Generate a phase pattern for an LC-SLM based on the given matrix.
     
     Args:
-    - matrix (2D numpy array): The matrix to be encoded, with values from 0 to 1.
+    - matrix (2D numpy array): The matrix to be encoded, with values from -1 to 1.
     - macropixel_size (int): The size of each macropixel (n x n pixels).
+    - grating_frequency (float): Frequency of the grating pattern within each macropixel.
     
     Returns:
     - 2D numpy array: The generated phase pattern.
@@ -22,70 +22,38 @@ def generate_phase_pattern(matrix, macropixel_size):
     nrows, ncols = matrix.shape
     pattern = np.zeros((nrows * macropixel_size, ncols * macropixel_size))
 
-    # Find the minimum and maximum values in the matrix
-    min_value = np.min(matrix)
-    max_value = np.max(matrix)
-
-    # Scale the matrix to the range [-1, 1]
-    scaled_matrix = 2 * (matrix - min_value) / (max_value - min_value) - 1
-
-
     for i in range(nrows):
         for j in range(ncols):
-            # Scale the matrix value to determine the amplitude of the grating
-            if (scaled_matrix[i, j] >= 0):
-                amplitude = scaled_matrix[i, j] * np.pi
-                # Create the grating pattern for the macropixel
-                grating = np.linspace(0, amplitude, macropixel_size)
+            # Determine the amplitude of the grating based on the matrix value
+            amplitude = np.pi * np.abs(matrix[i, j])
+            phase_shift = np.pi if matrix[i, j] < 0 else 0
 
-
-            if (scaled_matrix[i, j] < 0):
-                amplitude = (scaled_matrix[i, j]) * np.pi
-                # Create the grating pattern for the macropixel
-                grating = np.linspace(np.pi, amplitude, macropixel_size)
-
-
-            macropixel = grating[:, None]
+            # Create a sinusoidal grating pattern for the macropixel
+            x = np.linspace(0, 2 * np.pi * grating_frequency, macropixel_size)
+            grating = amplitude * np.sin(x) + phase_shift
 
             # Place the macropixel in the pattern
-            pattern[i * macropixel_size:(i + 1) * macropixel_size, j * macropixel_size:(j + 1) * macropixel_size] = macropixel
+            pattern[i * macropixel_size:(i + 1) * macropixel_size, j * macropixel_size:(j + 1) * macropixel_size] = grating
     
     return pattern
 
 # Example usage
 matrix = np.array([[0.2, 0.5], [0.7, 1.0], [-0.2, -0.5], [-0.7, -1.0]])
 macropixel_size = 100
-phase_pattern = generate_phase_pattern(matrix, macropixel_size)
+grating_frequency = 3  # Change this value to adjust the frequency
+phase_pattern = generate_phase_pattern(matrix, macropixel_size, grating_frequency)
 
-
-# Compute the 2D Fourier transform of the matrix
-fourier_transform = np.fft.fft2(phase_pattern)
-# Shift the zero frequency component to the center
-fourier_transform_shifted = np.fft.fftshift(fourier_transform)
-# Compute the magnitude spectrum
-magnitude_spectrum = 20 * np.log(np.abs(fourier_transform_shifted))
-
+# Plotting
 plt.figure()
 plt.imshow(matrix, cmap='viridis', interpolation='nearest')
-plt.colorbar()  # Add a colorbar to the plot
-plt.title('Matrix Heatmap')
+plt.colorbar()
+plt.title('Original Matrix')
 
 plt.figure()
 plt.imshow(phase_pattern, cmap='viridis', interpolation='nearest')
-plt.colorbar()  # Add a colorbar to the plot
-plt.title('Matrix Heatmap')
+plt.colorbar()
+plt.title('Phase Pattern')
 
 plt.show()
-
-
-
-plt.figure()
-# Plotting the original matrix
-plt.subplot(121), plt.imshow(matrix, cmap='viridis')
-plt.title('Original Matrix'), plt.xticks([]), plt.yticks([])
-# Plotting the magnitude spectrum of the Fourier transform
-plt.subplot(122), plt.imshow(magnitude_spectrum, cmap='viridis')
-plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
-
 
 
