@@ -7,6 +7,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+def rescaled_sin(sine_values):
+    # Rescale the sine values between 0 and 1
+    min_val = np.min(sine_values)
+    max_val = np.max(sine_values)
+
+    # Perform the rescaling
+    rescaled_sinex = (sine_values - min_val) / (max_val - min_val)
+    return rescaled_sinex
+
+
 def generate_phase_pattern(matrix, macropixel_size, grating_frequency):
     """
     Generate a phase pattern for an LC-SLM based on the given matrix.
@@ -30,7 +41,8 @@ def generate_phase_pattern(matrix, macropixel_size, grating_frequency):
 
             # Create a sinusoidal grating pattern for the macropixel
             x = np.linspace(0, 2 * np.pi * grating_frequency, macropixel_size)
-            grating = amplitude * np.sin(x) + phase_shift
+
+            grating = amplitude/2 * (np.sin(x)+1) + phase_shift
 
             # Place the macropixel in the pattern
             pattern[i * macropixel_size:(i + 1) * macropixel_size, j * macropixel_size:(j + 1) * macropixel_size] = grating
@@ -39,7 +51,7 @@ def generate_phase_pattern(matrix, macropixel_size, grating_frequency):
 
 # Example usage
 matrix = np.array([[0.2, 0.5], [0.7, 1.0], [-0.2, -0.5], [-0.7, -1.0]])
-macropixel_size = 100
+macropixel_size = 150
 grating_frequency = 3  # Change this value to adjust the frequency
 phase_pattern = generate_phase_pattern(matrix, macropixel_size, grating_frequency)
 
@@ -54,6 +66,7 @@ plt.imshow(phase_pattern, cmap='viridis', interpolation='nearest')
 plt.colorbar()
 plt.title('Phase Pattern')
 
-plt.show()
+#plt.show()
 
-
+# Save the array to a .npy file
+np.save('test_phase_pattern_150mp_3gf.npy', phase_pattern)
