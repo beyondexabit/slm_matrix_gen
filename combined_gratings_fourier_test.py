@@ -18,7 +18,6 @@ def generate_phase_pattern(matrix, macropixel_size, grating_frequency_x, grating
     - 2D numpy array: The generated phase pattern.
     """
     grating_freq_x_old = grating_frequency_x 
-    grating_freq_y_old = grating_frequency_y 
 
     nrows, ncols = matrix.shape
     pattern = np.zeros((nrows * macropixel_size, ncols * macropixel_size))
@@ -28,8 +27,6 @@ def generate_phase_pattern(matrix, macropixel_size, grating_frequency_x, grating
     for i in range(nrows):
         for j in range(ncols):
             # Determine the amplitude of the grating based on the matrix value
-            #print(matrix[i, j])
-            #print('b')
 
             amplitude = np.abs(matrix[i, j])
             phase_shift = np.pi if matrix[i, j] < 0 else 0
@@ -51,7 +48,6 @@ def generate_phase_pattern(matrix, macropixel_size, grating_frequency_x, grating
 
             grating_frequency_x += freq_shift_x
 
-        #print('a')
         grating_frequency_y += freq_shift_y
         grating_frequency_x = grating_freq_x_old
 
