@@ -2,11 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2 # Python DFT
 
-matrix = np.load('/Users/jakubkostial/Documents/phd/code/loop_matmul/repo/formatted_matrices/saw_test_phase_pattern_150mp_30gf.npy')
+matrix = np.load('/Users/jakubkostial/Documents/phd/code/loop_matmul/repo/formatted_matrices/saw_test_phase_pattern_150mp_20gf.npy')
 
 plt.figure()
 plt.imshow(matrix, cmap='viridis', interpolation='nearest')
-plt.title('Magnitude of Fourier Transform')
+plt.title('SLM visualisation')
 
 
 F = fft2(matrix)                         

@@ -81,4 +81,4 @@ for i in range(1, 11):
     # Place the rescaled matrix in the center of the larger matrix
     large_matrix[center_y:center_y + rescaled_matrix.shape[0], center_x:center_x + rescaled_matrix.shape[1]] = rescaled_matrix
 
-    np.save(f'/Users/jakubkostial/Documents/phd/code/loop_matmul/repo/formatted_matrices/saw_test_phase_pattern_150mp_{grating_frequency_x}gf.npy', large_matrix)
+    np.savetxt(f'/Users/jakubkostial/Documents/phd/code/loop_matmul/repo/formatted_matrices/saw_test_phase_pattern_150mp_{grating_frequency_x}gf.csv', large_matrix, delimiter=',')
