@@ -30,3 +30,4 @@ for filename in os.listdir(folder_path):
     large_matrix[center_y:center_y + rescaled_matrix.shape[0], center_x:center_x + rescaled_matrix.shape[1]] = rescaled_matrix
     # Save the array to a CSV file
     np.savetxt(f'/Users/jakubkostial/Documents/phd/code/loop_matmul/repo/formatted_matrices/slm_ready_{filename[:-4]}.csv', large_matrix, delimiter=',')
+
