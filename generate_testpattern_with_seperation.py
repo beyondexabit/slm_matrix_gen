@@ -39,7 +39,7 @@ def generate_phase_pattern(matrix, macropixel_size, macropixel_seperation, grati
             phase_shift = np.pi if matrix[i, j] < 0 else 0
 
             # Create sinusoidal grating patterns for the macropixel
-            x = np.linspace(0, 2 * np.pi * grating_frequency_x, macropixel_size)
+            x = np.linspace(0, 2 * np.pi * grating_frequency_x, macropixel_size) # grating frequency parameter determines how many times it occurs in the range
             y = np.linspace(0, 2 * np.pi * grating_frequency_y, macropixel_size)
 
             grating_x = np.pi/2 * (sawtooth(x) + 1) 
@@ -68,7 +68,7 @@ def generate_phase_pattern(matrix, macropixel_size, macropixel_seperation, grati
 
 
 # Example usage
-input_matrix = np.array([[1, 0], [0, 0], [0, 0]])
+input_matrix = np.array([[0, 0], [0, 0], [0, 1]])
 macropixel_size = 216
 grating_frequency_y = -46  # Frequency offset for y-axis
 
@@ -113,9 +113,7 @@ plt.imshow(log_scaled_image, cmap='viridis', interpolation='nearest')
 plt.title('Magnitude of Fourier Transform')
 
 #plt.show()
-
-
-np.save(f'/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/matrices_dsim_scaling/l1' +
-        f'/phase_pattern_l1_{grating_frequency_x}gfx{grating_frequency_y}gfy_tl_test.npy', large_matrix)
+np.save(f'/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/formatted_matrices_individual/l1' +
+        f'/phase_pattern_l1_{grating_frequency_x}gfx{grating_frequency_y}gfy_00_00_01_test.npy', large_matrix)
 
 

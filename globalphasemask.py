@@ -8,8 +8,8 @@ def rescale_matrix(matrix, new_min, new_max):
     old_min, old_max = matrix.min(), matrix.max()
     return (new_max - new_min) / (old_max - old_min) * (matrix - old_min) + new_min
 
-grating_frequency_x = 460
-grating_frequency_y = 0
+grating_frequency_x = 390
+grating_frequency_y = 400
 
 matrix = np.zeros((1080, 1920))
 
@@ -47,5 +47,5 @@ plt.colorbar()
 plt.title('Grating pattern')
 #plt.show()
 
-np.save('/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/matrices_dsim_scaling/l1/global_mask.npy', grating_combined)    
+np.save('/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/matrices_dsim_scaling/l1/global_mask_correct20gfx20gfy.npy', grating_combined)    
 
