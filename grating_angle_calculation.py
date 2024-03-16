@@ -5,7 +5,7 @@ import sys
 from numpy.fft import fft2, fftshift, ifft2 # Python DFT
 
 
-grating_frequency_x = 46
+grating_frequency_x = 20
 macropixel_size = 216
 
 x = np.linspace(0, 2 * np.pi * grating_frequency_x, macropixel_size) #oscillations per macropixel
@@ -32,11 +32,10 @@ saw_phase_mask_x = (sawtooth(np.sin(steering_angle_x) * x))
 '''
 
 # real angle of propagation assuming misplaced hologram
-displacement_from_axis = 1.728e-3 # for x axis, left is positive and right is negative
+displacement_from_axis = 1.296e-3 # for x axis, left is positive and right is negative
                           # for y axis the displacement doesnt matter as the frequencies 
-true_angle_prop = np.arctan((displacement_from_axis+xdistance)/focal_length)
+true_angle_prop = degrees + np.arctan((displacement_from_axis)/focal_length)
 print('true_angle_prop:',np.degrees(true_angle_prop))
-
 
 plt.figure()
 plt.plot(grating_x)
@@ -66,6 +65,7 @@ plt.plot(grating_x)
 # at image plane centre coordinate = 0.00178m
 # For 20 cm of further propagation coordinate is =0.01172
 # From calculations I get: degrees = 2.862
+
 
 
 # 1122pixels = 1920/2 - 1122 = -162pixels = -162*8e-6 = 1.296e-3m, Angle of propagation (gfx = 40)

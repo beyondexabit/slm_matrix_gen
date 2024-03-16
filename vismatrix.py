@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2 # Python DFT
 
-matrix = np.load('/Users/jakubkostial/Documents/phd/code/loop_matmul/repo/formatted_matrices/saw_test_phase_pattern_150mp_20gf.npy')
+matrix = np.load('/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/repo/slm_matrix_gen/formatted_matrices_individual/l1/phase_pattern_l1_20gfx-46gfy_00_10_00_test.npy')
 
 plt.figure()
 plt.imshow(matrix, cmap='viridis', interpolation='nearest')

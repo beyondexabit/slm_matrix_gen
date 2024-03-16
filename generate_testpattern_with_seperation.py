@@ -100,7 +100,7 @@ rescaled_matrix = rescale_matrix(matrix_new, 0, 255)
 large_matrix = np.zeros((1080, 1920))
 
 # Calculate center coordinates
-center_x = (large_matrix.shape[1] - rescaled_matrix.shape[1]) // 8
+center_x = (large_matrix.shape[1] - rescaled_matrix.shape[1]) // 2
 center_y = (large_matrix.shape[0] - rescaled_matrix.shape[0]) // 2
 
 # Place the rescaled matrix in the center of the larger matrix
@@ -122,10 +122,10 @@ plt.figure()
 plt.imshow(log_scaled_image, cmap='viridis', interpolation='nearest')
 plt.title('Magnitude of Fourier Transform')
 
-#plt.show()
-#np.save(f'/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/formatted_matrices_individual/l1' +
-#        f'/phase_pattern_l1_{grating_frequency_x}gfx{grating_frequency_y}gfy_00_00_01_test.npy', large_matrix)
+np.save(f'/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/repo/slm_matrix_gen/formatted_matrices_individual/l1' +
+        f'/phase_pattern_l1_{grating_frequency_x}gfx{grating_frequency_y}gfy_00_00_01_test.npy', large_matrix)
 
+plt.show()
 
 #                                   y,  x
 #Center element of grating_combined:324,798
