@@ -40,7 +40,7 @@ def generate_phase_pattern(matrix, macropixel_size, macropixel_seperation, grati
 
             # Create sinusoidal grating patterns for the macropixel
             x = np.linspace(0, 2 * np.pi * grating_frequency_x, macropixel_size) # grating frequency parameter determines how many times it occurs in the range
-            y = np.linspace(0, 2 * np.pi * grating_frequency_y, macropixel_size)
+            y = np.linspace(0, 2 * np.pi * grating_frequency_y, macropixel_size) # aka oscillations per macropixel
 
             grating_x = np.pi/2 * (sawtooth(x) + 1) 
             grating_y = np.pi/2 * (sawtooth(y) + 1) 
@@ -54,6 +54,16 @@ def generate_phase_pattern(matrix, macropixel_size, macropixel_seperation, grati
                     j * (macropixel_size + j*macropixel_seperation):(j + 1) * (macropixel_size + j*macropixel_seperation)] = grating_combined
 
             grating_frequency_x += freq_shift_x
+
+            # Calculate center coordinates of the placed grating_combined within pattern
+            center_x_grating_combined = (np.shape(grating_combined)[0] - 1) // 2
+            center_y_grating_combined = (np.shape(grating_combined)[1] - 1) // 2
+
+            # Print or use the center_element as needed
+            center_x = i * macropixel_size + center_x_grating_combined
+            center_y = j * (macropixel_size + j*macropixel_seperation) + center_y_grating_combined
+            print(f"Center element of grating_combined:{center_x},{center_y}")
+
 
         grating_frequency_y += freq_shift_y
         grating_frequency_x = grating_freq_x_old
@@ -113,7 +123,15 @@ plt.imshow(log_scaled_image, cmap='viridis', interpolation='nearest')
 plt.title('Magnitude of Fourier Transform')
 
 #plt.show()
-np.save(f'/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/formatted_matrices_individual/l1' +
-        f'/phase_pattern_l1_{grating_frequency_x}gfx{grating_frequency_y}gfy_00_00_01_test.npy', large_matrix)
+#np.save(f'/Users/jakubkostial/Documents/phd/code/slm_matrix_gen-main/formatted_matrices_individual/l1' +
+#        f'/phase_pattern_l1_{grating_frequency_x}gfx{grating_frequency_y}gfy_00_00_01_test.npy', large_matrix)
 
+
+#                                   y,  x
+#Center element of grating_combined:324,798
+#Center element of grating_combined:324,1122
+#Center element of grating_combined:540,798
+#Center element of grating_combined:540,1122
+#Center element of grating_combined:751,798
+#Center element of grating_combined:751,1122
 
